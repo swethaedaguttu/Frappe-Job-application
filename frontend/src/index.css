@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.task-card {
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+}
+
+.status-badge {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.priority-low {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.priority-medium {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+
+.priority-high {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+/* Login Page Styling */
+.login-page {
+  background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 5rem auto;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.login-card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.login-card .card-body {
+  position: relative;
+}
+
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 114, 255, 0.25);
+  border-color: #0072ff;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+  border: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+  background: linear-gradient(to right, #0063db, #00b3ff);
+}
+
+/* Override Bootstrap's default button focus style */
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 114, 255, 0.5);
+}
+
+/* Logo Component Styling */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.logo-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 114, 255, 0.3);
+}
+
+/* Input Group Styling */
+.input-group-text {
+  background-color: transparent;
+  border-right: none;
+  color: #6c757d;
+}
+
+.input-group .form-control {
+  border-left: none;
+}
+
+.input-group .form-control:focus {
+  border-left: none;
+}
+
+.input-group .form-control:focus + .input-group-text {
+  border-color: #0072ff;
+  box-shadow: 0 0 0 0.25rem rgba(0, 114, 255, 0.25);
+}
+
+/* Fix for the input group borders */
+.input-group:focus-within .input-group-text {
+  border-color: #0072ff;
+} 
