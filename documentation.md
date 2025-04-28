@@ -1,4 +1,4 @@
-# Frappe Framework Task Management Application Documentation
+# Frappe Framework Job Application Management Documentation
 
 ## 1. Frappe Framework Installation
 
@@ -22,8 +22,8 @@
 
 4. Create a new site:
    ```
-   bench new-site task-management.local
-   bench use task-management.local
+   bench new-site job-application.local
+   bench use job-application.local
    ```
 
 5. Get and install Frappe:
@@ -51,7 +51,7 @@ custom_app/
 │   ├── __init__.py
 │   └── desktop.py
 ├── hooks.py
-├── task_management/
+├── job_application/
 │   ├── __init__.py
 │   └── doctype/
 │       ├── project/
@@ -59,29 +59,29 @@ custom_app/
 │       │   ├── project.py
 │       │   ├── project.json
 │       │   └── project_list.js
-│       ├── project_task/
+│       ├── project_application/
 │       │   ├── __init__.py
-│       │   └── project_task.json
-│       └── task/
+│       │   └── project_application.json
+│       └── job_application/
 │           ├── __init__.py
-│           ├── task.py
-│           ├── task.json
-│           └── task_list.js
+│           ├── job_application.py
+│           ├── job_application.json
+│           └── job_application_list.js
 ```
 
 ### DocType Creation
 Two main DocTypes were implemented:
 
-#### Task DocType
-The Task DocType includes the following fields:
-- Title (Data): Required field for the task name
-- Description (Text Editor): Rich text field for detailed task description
-- Status (Select): Options include Open, In Progress, Completed, and Cancelled
+#### Job Application DocType
+The Job Application DocType includes the following fields:
+- Title (Data): Required field for the job application name
+- Description (Text Editor): Rich text field for detailed job application description
+- Status (Select): Options include Applied, Screening, Interview, Offer, Hired, and Rejected
 - Priority (Select): Options include Low, Medium, and High
-- Start Date (Date): Date when the task should start
-- End Date (Date): Deadline for the task
+- Start Date (Date): Date when the application process started
+- End Date (Date): Deadline for the application
 - Project (Link): Reference to the Project DocType
-- Additional Details (Long Text): Extra information about the task
+- Additional Details (Long Text): Extra information about the application
 
 #### Project DocType
 The Project DocType includes the following fields:
@@ -90,12 +90,12 @@ The Project DocType includes the following fields:
 - Status (Select): Options include Planning, Active, Completed, and Cancelled
 - Start Date (Date): Date when the project should start
 - End Date (Date): Deadline for the project
-- Tasks (Table): A child table to link tasks to the project
+- Applications (Table): A child table to link job applications to the project
 
-The Project Task child table creates a many-to-many relationship between Projects and Tasks, allowing a task to be part of a project while maintaining its own record.
+The Project Application child table creates a many-to-many relationship between Projects and Job Applications, allowing an application to be part of a project while maintaining its own record.
 
 ### DocType Definition
-The JSON definition files (task.json and project.json) define the structure and properties of the DocTypes including:
+The JSON definition files (job_application.json and project.json) define the structure and properties of the DocTypes including:
 - Fields with their properties (type, label, options)
 - Form layout (sections, columns)
 - Permissions for different user roles
@@ -106,24 +106,24 @@ The JSON definition files (task.json and project.json) define the structure and 
 ### Role Definitions
 Three custom roles were implemented for the application:
 1. **Administrator/System Manager:**
-   - Full control (create, read, update, delete) for Tasks and Projects
+   - Full control (create, read, update, delete) for Job Applications and Projects
    - Can manage users and roles
    - Access to system settings
 
-2. **Task Manager:**
-   - Can create, read, and update Tasks and Projects
-   - Cannot delete Tasks or Projects
-   - Can export and share Tasks and Projects
-   - Can add/remove Tasks from Projects
+2. **Application Manager:**
+   - Can create, read, and update Job Applications and Projects
+   - Cannot delete Job Applications or Projects
+   - Can export and share Job Applications and Projects
+   - Can add/remove Job Applications from Projects
 
-3. **Task User:**
-   - Read-only access to Tasks and Projects
-   - Can export Tasks and Projects for reporting
-   - Cannot create, update, or delete Tasks or Projects
+3. **Application User:**
+   - Read-only access to Job Applications and Projects
+   - Can export Job Applications and Projects for reporting
+   - Cannot create, update, or delete Job Applications or Projects
 
 ### Permission Configuration
 Permissions are configured in multiple layers:
-1. **DocType Level:** Both Task and Project DocTypes have role-based permissions defined in their JSON files
+1. **DocType Level:** Both Job Application and Project DocTypes have role-based permissions defined in their JSON files
 2. **API Level:** All API endpoints check user permissions before performing operations
 3. **Frontend Level:** UI elements (edit/delete buttons) are shown or hidden based on user roles
 
@@ -132,8 +132,8 @@ A setup script (setup_roles.py) was created to:
 - Create the necessary roles if they don't exist
 - Create test users with appropriate roles:
   - admin@example.com (Administrator)
-  - manager@example.com (Task Manager)
-  - user@example.com (Task User)
+  - manager@example.com (Application Manager)
+  - user@example.com (Application User)
 
 ## 4. Basic Functionality Implementation
 
@@ -149,22 +149,22 @@ These operations are exposed through custom API endpoints defined in `api.py`.
 ### API Endpoints
 The following API endpoints were implemented:
 
-#### Task Endpoints
-- `get_tasks`: Retrieve tasks with optional status and project filtering
-- `create_task`: Create a new task with validation
-- `update_task`: Update an existing task with permission checks
-- `delete_task`: Delete a task with permission checks
+#### Job Application Endpoints
+- `get_applications`: Retrieve job applications with optional status and project filtering
+- `create_application`: Create a new job application with validation
+- `update_application`: Update an existing job application with permission checks
+- `delete_application`: Delete a job application with permission checks
 
 #### Project Endpoints
 - `get_projects`: Retrieve projects with optional status filtering
 - `create_project`: Create a new project with validation
 - `update_project`: Update an existing project with permission checks
 - `delete_project`: Delete a project with permission checks
-- `add_task_to_project`: Add a task to a project
-- `remove_task_from_project`: Remove a task from a project
+- `add_application_to_project`: Add a job application to a project
+- `remove_application_from_project`: Remove a job application from a project
 
 ### List View
-Custom list views have been implemented to display tasks and projects with visual indicators for status and priority. The list views allow:
+Custom list views have been implemented to display job applications and projects with visual indicators for status and priority. The list views allow:
 - Sorting by various fields
 - Visual indicators for different statuses
 - Quick access to edit and delete actions (based on user permissions)
@@ -186,14 +186,14 @@ The React frontend connects to Frappe's authentication API using the following:
 ### Role-Based UI
 The frontend adapts the user interface based on the user's role:
 - Administrators see all buttons and features
-- Task Managers see create and edit buttons, but not delete
-- Regular Users only see the task list without edit controls
+- Application Managers see create and edit buttons, but not delete
+- Regular Users only see the application list without edit controls
 
 ### React Components
 The frontend application consists of several key components:
 - **Login.js**: Handles user authentication
-- **Dashboard.js**: Displays tasks with role-based UI elements
-- **TaskForm.js**: Form for creating/editing tasks with permission checks
+- **Dashboard.js**: Displays job applications with role-based UI elements
+- **ApplicationForm.js**: Form for creating/editing job applications with permission checks
 - **NavBar.js**: Navigation bar with user information and logout button
 - **App.js**: Main component with route protection based on user roles
 
@@ -222,8 +222,8 @@ frappe.local.response.headers["Access-Control-Max-Age"] = "3600"
 
 The restart script also updates CORS settings on each restart to ensure they're properly configured:
 ```powershell
-wsl -d Ubuntu -e bash -c "cd ~/frappe-project/frappe-bench && source ~/frappe-env/bin/activate && bench --site task-management.local set-config allow_cors 1"
-wsl -d Ubuntu -e bash -c "cd ~/frappe-project/frappe-bench && source ~/frappe-env/bin/activate && bench --site task-management.local set-config cors_domains '[\"http://localhost:3000\", \"http://127.0.0.1:3000\"]'"
+wsl -d Ubuntu -e bash -c "cd ~/frappe-project/frappe-bench && source ~/frappe-env/bin/activate && bench --site job-application.local set-config allow_cors 1"
+wsl -d Ubuntu -e bash -c "cd ~/frappe-project/frappe-bench && source ~/frappe-env/bin/activate && bench --site job-application.local set-config cors_domains '[\"http://localhost:3000\", \"http://127.0.0.1:3000\"]'"
 ```
 
 ### Challenge 2: Redis Port Conflicts
@@ -247,14 +247,14 @@ wsl -d Ubuntu -e bash -c "cd ~/frappe-project/frappe-bench && source ~/frappe-en
 ## 7. Future Enhancements
 
 ### Possible Improvements
-1. **Task Assignment**: Add the ability to assign tasks to specific users
-2. **Project Management**: Group tasks into projects for better organization
-3. **Email Notifications**: Send notifications when tasks are created or updated
-4. **File Attachments**: Allow file uploads for tasks
-5. **Task Dependencies**: Create relationships between tasks
-6. **Calendar View**: Add a calendar view to visualize task timelines
+1. **Application Assignment**: Add the ability to assign job applications to specific users
+2. **Project Management**: Group job applications into projects for better organization
+3. **Email Notifications**: Send notifications when job applications are created or updated
+4. **File Attachments**: Allow file uploads for job applications
+5. **Application Dependencies**: Create relationships between job applications
+6. **Calendar View**: Add a calendar view to visualize job application timelines
 7. **Mobile Optimization**: Improve the UI for mobile devices
-8. **Task Templates**: Create reusable templates for common tasks
+8. **Application Templates**: Create reusable templates for common job applications
 
 ## 8. Running the Application
 
@@ -275,17 +275,17 @@ wsl -d Ubuntu -e bash -c "cd ~/frappe-project/frappe-bench && source ~/frappe-en
 
 3. Login with one of the test users:
    - Administrator: admin@example.com / admin123
-   - Task Manager: manager@example.com / manager123
-   - Regular User: user@example.com / user123
+   - Application Manager: manager@example.com / manager123
+   - Application User: user@example.com / user123
 
 ## 9. Conclusion
 
-This project successfully demonstrates the integration of Frappe Framework with a React frontend to create a functional task management application. The implementation includes:
+This project successfully demonstrates the integration of Frappe Framework with a React frontend to create a functional job application management system. The implementation includes:
 
 - A custom DocType with appropriate fields and permissions
 - Complete CRUD operations through custom API endpoints
 - Role-based access control with three distinct roles
 - A React frontend with authentication against Frappe's API
-- A clean, user-friendly interface for managing tasks
+- A clean, user-friendly interface for managing job applications
 
 The application showcases the power of using Frappe as a backend framework combined with a modern React frontend to create a robust and scalable business application. 

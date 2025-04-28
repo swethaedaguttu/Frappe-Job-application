@@ -1,28 +1,28 @@
-# Frappe Task Management Application
+# Frappe Job Application Management
 
-A comprehensive task management application built with Frappe Framework and React for the Job Application Project. This application demonstrates integration of a custom Frappe app with a React frontend, including role-based permissions and a complete CRUD functionality for tasks.
+A comprehensive job application management system built with Frappe Framework and React for the Job Application Project. This application demonstrates integration of a custom Frappe app with a React frontend, including role-based permissions and a complete CRUD functionality for job applications.
 
 ## Project Structure
 
 - `backend/`: Contains the Frappe Framework custom app
-  - Custom DocTypes: Task and Project
+  - Custom DocTypes: Job Application and Project
   - API endpoints for CRUD operations
   - Role-based permissions
   - CORS middleware for frontend connectivity
   - Setup scripts for roles and users
 - `frontend/`: Contains the React frontend
   - Login screen with Frappe authentication
-  - Dashboards for viewing and managing tasks and projects
-  - Forms for creating and editing tasks and projects
-  - Project details view with task assignment
+  - Dashboards for viewing and managing job applications and projects
+  - Forms for creating and editing job applications and projects
+  - Project details view with job application assignment
   - Role-based UI elements
 
 ## Features
 
 ### Backend Features
 - Custom DocTypes with comprehensive fields:
-  - Task: title, description, status, priority, dates, and project assignment
-  - Project: title, description, status, dates, and task tracking
+  - Job Application: title, description, status, priority, dates, and project assignment
+  - Project: title, description, status, dates, and job application tracking
 - API endpoints for all CRUD operations
 - Role-based permissions with three distinct roles
 - Custom middleware for CORS handling
@@ -33,15 +33,15 @@ A comprehensive task management application built with Frappe Framework and Reac
 - Bootstrap-based responsive UI
 - Role-based UI elements (showing/hiding buttons based on user role)
 - Protected routes based on user role
-- Project management with task assignment
+- Project management with job application assignment
 - Progress tracking for projects
 - Fallback mechanism for offline/demo operation
 
 ### Authentication & Permissions
 - Three user roles implemented:
   - Administrator: Full control (create, read, update, delete)
-  - Task Manager: Can create, read, and update tasks and projects (no delete)
-  - Task User: Read-only access
+  - Application Manager: Can create, read, and update job applications and projects (no delete)
+  - Application User: Read-only access
 - Login screen connected to Frappe's authentication API
 - Session management using localStorage
 
@@ -74,8 +74,8 @@ powershell -File setup.ps1
 | Role          | Email               | Password    |
 |---------------|---------------------|-------------|
 | Administrator | admin@example.com   | admin123    |
-| Task Manager  | manager@example.com | manager123  |
-| Task User     | user@example.com    | user123     |
+| Application Manager  | manager@example.com | manager123  |
+| Application User     | user@example.com    | user123     |
 
 ## Documentation
 
@@ -107,8 +107,8 @@ Detailed documentation is available in the `documentation.md` file, covering:
 
 Screenshots of the application are available in the `screenshots` directory:
 - Login Screen
-- Task Dashboard
-- Task Creation Form
+- Job Application Dashboard
+- Job Application Creation Form
 - Role-based UI differences
 
 ## License
